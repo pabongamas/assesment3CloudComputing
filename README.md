@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AWS Cloud Deployment Assessment
 
-## Getting Started
+This Next.js application demonstrates a cloud-native architecture using AWS EC2, S3, and DynamoDB.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Upload to S3**: Securely upload images to an AWS S3 bucket.
+- **Metadata in DynamoDB**: Store document metadata (Title, Description, S3 Key, URL) in DynamoDB.
+- **CRUD Operations**: Full Create, Read, Update, Delete functionality.
+- **Dockerized**: Ready for deployment on EC2 via Docker.
+- **Premium UI**: Modern, responsive dark-mode interface.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- AWS Account
+- S3 Bucket (Public Read or Presigned URLs enabled, CORS configured)
+- DynamoDB Table (Partition Key: `id` (String))
+- Node.js & npm (Locally) or Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup & Run
 
-## Learn More
+1.  **Environment Variables**:
+    Copy `.env.local.example` to `.env.local` and fill in your AWS credentials and resource names.
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    cp .env.local.example .env.local
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  **Install Dependencies**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Run Development Server**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    Open [http://localhost:3000](http://localhost:3000).
+
+## Docker Deployment (EC2)
+
+1.  **Build Image**:
+
+    ```bash
+    docker build -t assessment3-app .
+    ```
+
+2.  **Run Container**:
+    (Ensure you pass env vars or have IAM role attached to EC2)
+
+    ```bash
+    docker run -p 3000:3000 -e S3_BUCKET_NAME=... -e DYNAMODB_TABLE_NAME=... assessment3-app
+    ```

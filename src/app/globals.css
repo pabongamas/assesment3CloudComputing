@@ -1,27 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-glass-border: var(--glass-border);
+}
+
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Setup New Palette */
+  --alabaster-grey: #cfdbd5;
+  --soft-linen: #e8eddf;
+  --tuscan-sun: #f5cb5c;
+  --carbon-black: #242423;
+  --graphite: #333533;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Theme Mapping */
+  --bg-primary: var(--carbon-black);
+  --bg-secondary: var(--graphite);
+  --bg-tertiary: rgba(51, 53, 51, 0.5);
+  /* Semi-transparent graphite */
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  --text-primary: var(--soft-linen);
+  --text-secondary: var(--alabaster-grey);
+  --text-dark: var(--carbon-black);
+  /* For text on light buttons */
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --accent-primary: var(--tuscan-sun);
+  --accent-gradient: linear-gradient(135deg, #f5cb5c 0%, #e8eddf 100%);
+  /* Tuscan to Soft Linen */
+
+  --success: #10b981;
+  /* Keep standard success/error but maybe tweak saturation if needed */
+  --error: #ef4444;
+
+  --font-family: var(--font-geist-sans), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --glass-bg: rgba(36, 36, 35, 0.85);
+  /* Darker glass based on carbon black */
+  --glass-border: rgba(232, 237, 223, 0.1);
+  /* Soft linen border */
+
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --glow-shadow: 0 0 20px rgba(245, 203, 92, 0.3);
+  /* Yellow glow */
 }
 
 * {
@@ -30,13 +56,170 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  background-image: radial-gradient(circle at 50% 0%, #333533 0%, #242423 75%);
+  /* Subtle radial for depth */
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.title-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Filter drop shadow doesn't work well with text-clip, using text-shadow on parent or just relying on color */
+  text-shadow: 0 0 30px rgba(245, 203, 92, 0.2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: var(--text-dark);
+  /* Dark text on Yellow button for contrast */
+  box-shadow: 0 4px 15px rgba(245, 203, 92, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 203, 92, 0.6);
+  background: #fbd67e;
+  /* Slightly lighter yellow */
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.card {
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  border: 1px solid var(--glass-border);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-primary);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  /* Brighter label */
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(36, 36, 35, 0.3);
+  /* Darker track */
+  border-radius: 50%;
+  border-top-color: var(--text-dark);
+  /* Dark line on yellow */
+  animation: spin 1s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

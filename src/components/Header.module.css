@@ -1,0 +1,83 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(36, 36, 35, 0.9);
+    /* Carbon Black high opacity */
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    height: 80px;
+    /* Slightly taller for premium feel */
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.brand {
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.brand::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    /* Use Tuscan Sun for active status */
+    background: rgba(245, 203, 92, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(245, 203, 92, 0.2);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-right: 0.75rem;
+    box-shadow: 0 0 10px currentColor;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.9);
+    }
+}
